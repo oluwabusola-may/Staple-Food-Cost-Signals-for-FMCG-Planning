@@ -21,7 +21,7 @@ This divergence matters for FMCG cost planning: relying on broad national inflat
 
 Both datasets were sourced from the publicly available NBS and CBN websites.
 
-**World Bank data was evaluated and excluded** — found to be skewed toward two states, not nationally representative. Full rationale in `/documentation/world_bank_exclusion_rationale.md`.
+**World Bank data was evaluated and excluded** — found to be skewed toward two states, not nationally representative. Full rationale in `Cleaning_Summary.csv`.
 
 ## Methodology
 
@@ -36,7 +36,7 @@ Both datasets were sourced from the publicly available NBS and CBN websites.
 - `Text.From()` wrapping required for numeric fields in M code concatenation, a recurring fix across pipeline steps
 - Relationship direction in the Data Model must be checked against data type alignment before building, a type mismatch on Dim_Date silently reversed a relationship
 - NBS data is national-level aggregate, not state-by-state — regional analysis uses six geopolitical zones, not states
-- Caught and corrected a YoY calculation error mid-build that briefly produced a nonsensical -182% — the mistake was comparing two already-calculated percentages instead of raw prices. Full writeup in `/documentation/cleaning_summary.md`
+- Caught and corrected a YoY calculation error mid-build that briefly produced a nonsensical -182% — the mistake was comparing two already-calculated percentages instead of raw prices. Full writeup in `Cleaning_Summary.csv`
 
 ## Repo Contents
 
