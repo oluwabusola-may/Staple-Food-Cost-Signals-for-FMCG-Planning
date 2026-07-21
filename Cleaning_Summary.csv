@@ -1,0 +1,19 @@
+﻿Data Cleaning Summary,,,,
+Staple Food Cost Signals for FMCG Planning — Power Query steps,,,,
+,,,,
+Query,Source,Purpose,Key Steps,Notes
+NBS Price List,NBS_Price_List.csv,"National item-level prices, MoM/YoY, state highs/lows",Promoted headers; typed & rounded numeric fields; added Price_ID index; added Item Category via Text.Contains (Rice/Beans/Garri/Yam/Other),Base table for all national-level KPIs
+NBS Price Regional Zone,NBS_Price_Regional_Zone.csv,Regional (6-zone) price breakdown per item,Typed columns; added Zone_Price_ID index; unpivoted 6 zone columns into Region/Price rows; capitalized region names,"Zone-level, not state-level (NBS doesn't publish state granularity)"
+CBN Inflation Rate,CBN_Inflation_Rate_National.csv,"National benchmark: Food YoY, Food Average, All-Items YoY",Promoted headers; typed date & numeric fields; renamed period → Date,Used as the national comparison point against NBS staple basket
+CBN Exchange Rate,CBN_Exchange_Rate(USD).csv,Monthly Naira/USD central rate,Typed columns; grouped by year-month; took latest rate per month (daily → monthly); rebuilt Date as start-of-month; dropped helper columns,Reduces daily rate noise to one clean monthly figure
+Dim_Date,Generated (not a source file),"Continuous monthly date dimension, Nov 2024–May 2026",List.Generate to build full month sequence; added Year and Month name columns,Ensures no gaps in the date axis even where source data is missing
+Dim_Item,Derived from NBS_Price_List,Distinct item list with parent category,Selected & de-duplicated Item Label; added Item Category via Text.Contains logic; added Item_ID index,"One row per item label, mapped to its category (Rice/Beans/Garri/Yam)"
+,,,,
+,,,,
+,,,,
+Exclusions & Known Issues,,,,
+,,,,
+World Bank data excluded,Coverage skewed to two states only — not nationally representative,,,
+Missing months,"March 2025 and March 2026 absent from NBS_Price_List; flagged via Data_Complete column, not interpolated",,,
+Regional granularity,"NBS provides 6 geopolitical zones only, not state-by-state regional panel built at zone level",,,
+YoY calculation check,MoM/YoY independently recalculated in Power Query and validated against NBS's own published values before use,,,
